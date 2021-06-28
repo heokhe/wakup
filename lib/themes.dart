@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 const primaryColor = Color(0xff807cf7);
-const darkPrimaryColor = Color(0xff3833cc);
+const darkPrimaryColor = Color(0xff3328c9);
 final accentColor = Colors.indigoAccent.shade100;
 final _scaffoldBackground = Colors.grey.shade900;
 final _paperBackground = Color(0xff303030); // grey shade 850
@@ -39,17 +39,15 @@ final baseTheme = ThemeData(
   ),
 );
 
-final smellyTheme = baseTheme.copyWith(
+final testingTheme = baseTheme.copyWith(
   scaffoldBackgroundColor: darkPrimaryColor,
   appBarTheme: AppBarTheme(color: darkPrimaryColor),
-  iconTheme: IconThemeData(color: accentColor),
-  textSelectionTheme: TextSelectionThemeData(
-    cursorColor: accentColor,
-    selectionHandleColor: accentColor,
-    selectionColor: accentColor.withOpacity(0.5),
-  ),
+  primaryColor: Colors.lime,
+  accentColor: Colors.lime,
   colorScheme: baseTheme.colorScheme.copyWith(
     background: darkPrimaryColor,
     surface: darkPrimaryColor,
+    primary: Colors.lime,
+    secondary: Colors.lime,
   ),
 );

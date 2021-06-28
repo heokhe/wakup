@@ -10,7 +10,7 @@ import 'package:wakup/utils.dart';
 class TestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Theme(data: smellyTheme, child: _TestPage());
+    return Theme(data: testingTheme, child: _TestPage());
   }
 }
 
