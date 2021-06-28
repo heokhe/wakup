@@ -23,7 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  vibration: ^1.7.4-nullsafety.0
   timezone: 
   english_words: ^4.0.0
   duration: ^3.0.6
