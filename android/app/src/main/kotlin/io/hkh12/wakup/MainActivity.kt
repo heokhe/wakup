@@ -13,10 +13,16 @@ class MainActivity: FlutterActivity() {
     super.configureFlutterEngine(flutterEngine)
     MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
       call, result ->
-      if (call.method == "getDefaultRingtoneUri") {
-        result.success(Settings.System.DEFAULT_RINGTONE_URI.toString())
-      } else {
-        result.notImplemented()
+      when (call.method) {
+        "getDefaultRingtoneUri" -> {
+          result.success(Settings.System.DEFAULT_RINGTONE_URI.toString())
+        }
+        "getDefaultAlarmAlertUri" -> {
+          result.success(Settings.System.DEFAULT_ALARM_ALERT_URI.toString())          
+        }
+        else -> {
+          result.notImplemented()
+        }
       }
     }
   }

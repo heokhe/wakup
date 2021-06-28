@@ -12,9 +12,12 @@ import 'package:wakup/widgets/timepicker.dart';
 
 void _scheduleNotification(DateTime dateTime, bool useRingtone) async {
   final zonedDateTime = tz.TZDateTime.from(dateTime, tz.local);
-  final sound = useRingtone ? await getDefaultRingtone() : null;
-  final channelId = sound == null ? 'default_channel' : 'ringtone_channel';
-  final channelName = sound == null ? 'Alarms' : 'Alarms with ringtone sounds';
+  final sound =
+      useRingtone ? await getDefaultRingtone() : await getDefaultAlarmAlert();
+  final channelId =
+      !useRingtone || sound == null ? 'default_channel' : 'ringtone_channel';
+  final channelName =
+      !useRingtone || sound == null ? 'Alarms' : 'Alarms with ringtone sounds';
 
   await FlutterLocalNotificationsPlugin().zonedSchedule(
     0,
