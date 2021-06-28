@@ -2,15 +2,38 @@ import 'package:flutter/material.dart' hide Page;
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wakelock/wakelock.dart';
 import 'package:wakup/pages/waiting_page.dart';
 import 'package:wakup/themes.dart';
-import 'package:wakup/widgets/page.dart';
 import 'package:wakup/utils.dart';
 
 class TestPage extends StatelessWidget {
-  final thingToType = getANounAndAdjective();
+  @override
+  Widget build(BuildContext context) {
+    return Theme(data: smellyTheme, child: _TestPage());
+  }
+}
+
+class _TestPage extends StatefulWidget {
+  @override
+  _TestPageState createState() => _TestPageState();
+}
+
+class _TestPageState extends State<_TestPage> {
+  final _thingToType = getANounAndAdjective();
   final _focusNode = FocusNode();
-  TestPage({Key? key}) : super(key: key);
+
+  @override
+  void initState() {
+    super.initState();
+    Wakelock.enable();
+  }
+
+  @override
+  void dispose() {
+    Wakelock.disable();
+    super.dispose();
+  }
 
   void _onSuccess(BuildContext context) {
     _focusNode.unfocus();
@@ -25,20 +48,39 @@ class TestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: smellyTheme,
-      child: Scaffold(
-        body: Center(
-          child: Expanded(
-            child: SingleChildScrollView(
-              clipBehavior: Clip.none,
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.all(24),
-              child: Page(
-                icon: Icons.notifications_active_outlined,
-                title: 'Time\'s up!',
-                text: 'Write "$thingToType" and I\'ll let you go:',
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            AppBar(
+              elevation: 0,
+              leading: Icon(
+                Icons.notifications_active_outlined,
+                color: Colors.white54,
+              ),
+              title: Text('Time\'s up'),
+            ),
+            Divider(height: 1),
+            Padding(
+              padding: EdgeInsets.fromLTRB(16, 40, 16, 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    'Type the words below to end the alarm:',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        ?.copyWith(color: Colors.white70),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    _thingToType,
+                    style: Theme.of(context).textTheme.headline3?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                  ),
+                  SizedBox(height: 20),
                   TextField(
                     toolbarOptions: ToolbarOptions(paste: false),
                     autocorrect: false,
@@ -47,25 +89,21 @@ class TestPage extends StatelessWidget {
                     textInputAction: TextInputAction.none,
                     focusNode: _focusNode,
                     onChanged: (value) {
-                      if (value.toLowerCase() == thingToType.toLowerCase()) {
+                      if (value.toLowerCase().trim() ==
+                          _thingToType.toLowerCase()) {
                         _onSuccess(context);
                       }
                     },
                     decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      filled: true,
-                      hintText: thingToType,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(100),
-                        borderSide: BorderSide.none,
-                      ),
+                      labelText: 'Words here',
+                      hintText: _thingToType.toLowerCase(),
+                      border: OutlineInputBorder(),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
