@@ -41,7 +41,7 @@ class _PickerItem extends StatelessWidget {
         text,
         style: Theme.of(context)
             .textTheme
-            .headline3
+            .headline4
             ?.copyWith(fontWeight: FontWeight.w300, color: Colors.white),
       ),
     );
@@ -66,7 +66,7 @@ class _TimePickerState extends State<TimePicker> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 100), _animateToInitialData);
+    Timer(Duration(seconds: 1), _animateToInitialData);
   }
 
   bool get _isPm => _amPmController.selectedItem == 1;
@@ -108,6 +108,18 @@ class _TimePickerState extends State<TimePicker> {
                 width: 1.5,
               ),
             ),
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3 - 6,
+              ),
+              Text(':',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4
+                      ?.copyWith(color: Colors.white38))
+            ],
           ),
           Row(
             children: [
