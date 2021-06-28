@@ -7,8 +7,11 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:wakup/core/ringtone.dart';
 import 'package:wakup/pages/running_page.dart';
 import 'package:wakup/themes.dart';
-import 'package:wakup/utils.dart';
 import 'package:wakup/widgets/timepicker.dart';
+
+const int _FLAG_INSISTENT = 0x00000004;
+const int _FLAG_NO_CLEAR = 0x00000020;
+const int _FLAG_ONGOING_EVENT = 0x00000002;
 
 void _scheduleNotification(DateTime dateTime, bool useRingtone) async {
   final zonedDateTime = tz.TZDateTime.from(dateTime, tz.local);
@@ -22,7 +25,7 @@ void _scheduleNotification(DateTime dateTime, bool useRingtone) async {
   await FlutterLocalNotificationsPlugin().zonedSchedule(
     0,
     'Wake up!',
-    'it\'s ${hm(zonedDateTime.hour, zonedDateTime.minute)}',
+    'Enough sleep',
     zonedDateTime,
     NotificationDetails(
       android: AndroidNotificationDetails(
@@ -39,8 +42,11 @@ void _scheduleNotification(DateTime dateTime, bool useRingtone) async {
         priority: Priority.max,
         importance: Importance.max,
         color: primaryColor,
-        additionalFlags: Int32List.fromList([4, 32]),
-        showWhen: true,
+        additionalFlags: Int32List.fromList([
+          _FLAG_INSISTENT,
+          _FLAG_NO_CLEAR,
+          _FLAG_ONGOING_EVENT,
+        ]),
       ),
     ),
     uiLocalNotificationDateInterpretation:
@@ -59,6 +65,20 @@ class WaitingPage extends StatefulWidget {
 class _WaitingPageState extends State<WaitingPage> {
   TimeOfDay _timeOfDay = TimeOfDay.now();
   bool _useRingtone = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    SharedPreferences.getInstance().then((prefs) {
+      bool? prefsUseRingtone = prefs.getBool('use_ringtone');
+      if (prefsUseRingtone != null) {
+        setState(() {
+          _useRingtone = prefsUseRingtone;
+        });
+      }
+    });
+  }
 
   void _setTheAlarm(BuildContext context) async {
     final now = DateTime.now();
@@ -100,6 +120,7 @@ class _WaitingPageState extends State<WaitingPage> {
       appBar: AppBar(
         title: Text('wakup'),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _setTheAlarm(context),
