@@ -12,9 +12,9 @@ It has no snooze and "turn off" buttons; instead it displays some random words o
 - [] No iOS support. You probably expected this because I made the app with Flutter but no, I don't have a Macbook and I hate Apple and its users.
 
 ## Screenshots
-| Homepage | Alarm info page |Testing page |
-|--|--|--|
-| ![the homepage](screenshots/homepage.jpg) | ![alarm info page](screenshots/have-a-good-sleep.jpg) | ![testing page](screenshots/random-words.jpg) |
+| Homepage | Alarm info page | Testing page |
+|:--|:--|:--|
+| <img alt="the homepage" src="screenshots/homepage.jpg" width="100%"> | <img alt="alarm info page" src="screenshots/have-a-good-sleep.jpg" width="100%"> | <img alt="testing page" src="screenshots/random-words.jpg" width="100%"> |
 
 ## Download
 I'm too poor and lazy to publish it on Google Play or any other market.
