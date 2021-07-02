@@ -9,7 +9,7 @@ It has no snooze and "turn off" buttons; instead it displays some random words o
 - [x] Small in size: ~6MB.
 - [ ] Currently it can't schedule multiple alarms, or repeat them in next days.
 - [ ] It fails if you mute your phone. please don't.
-- [ ] No iOS support. You probably expected this because I made the app with Flutter but no, I don't have a Macbook and I hate Apple and its users.
+- [ ] No iOS support. You probably expected iOS support because the app is made with Flutter but I don't have a Macbook and I hate Apple and its users.
 
 ## Screenshots
 | Homepage | Alarm info page | Testing page |
