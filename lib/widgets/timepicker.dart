@@ -62,11 +62,18 @@ class _TimePickerState extends State<TimePicker> {
   final _hourController = FixedExtentScrollController();
   final _minuteController = FixedExtentScrollController();
   final _amPmController = FixedExtentScrollController();
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 1), _animateToInitialData);
+    _timer = Timer(Duration(milliseconds: 1500), _animateToInitialData);
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   bool get _isPm => _amPmController.selectedItem == 1;
@@ -78,14 +85,21 @@ class _TimePickerState extends State<TimePicker> {
     final curve = Curves.easeInOutExpo;
     final initialTime = widget.initialTime;
     if (initialTime == null) return;
-    _minuteController.animateToItem(initialTime.minute,
-        duration: duration, curve: curve);
-    _amPmController.animateToItem(initialTime.hour >= 12 ? 1 : 0,
-        duration: duration, curve: curve);
+    _minuteController.animateToItem(
+      initialTime.minute,
+      duration: duration,
+      curve: curve,
+    );
+    _amPmController.animateToItem(
+      initialTime.hour >= 12 ? 1 : 0,
+      duration: duration,
+      curve: curve,
+    );
     _hourController.animateToItem(
-        initialTime.hour % 12 == 0 ? 11 : (initialTime.hour % 12) - 1,
-        duration: duration,
-        curve: curve);
+      initialTime.hour % 12 == 0 ? 11 : (initialTime.hour % 12) - 1,
+      duration: duration,
+      curve: curve,
+    );
   }
 
   void _handleChange(_) {
@@ -111,14 +125,21 @@ class _TimePickerState extends State<TimePicker> {
           ),
           Row(
             children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 3 - 6,
+              Flexible(child: Container(), flex: 1),
+              Flexible(
+                flex: 2,
+                child: Center(
+                  child: Text(
+                    ':',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline4
+                        ?.copyWith(color: Colors.white38),
+                  ),
+                ),
               ),
-              Text(':',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4
-                      ?.copyWith(color: Colors.white38))
+              Flexible(child: Container(), flex: 3)
             ],
           ),
           Row(
@@ -130,7 +151,7 @@ class _TimePickerState extends State<TimePicker> {
                   onChanged: _handleChange,
                   children: [
                     for (var i = 1; i <= 12; i++)
-                      _PickerItem(text: i.toString())
+                      _PickerItem(text: padWithZeros(i))
                   ],
                 ),
               ),
