@@ -13,4 +13,3 @@ String getANounAndAdjective() =>
     '${capitalize(_pickRandomly(english.adjectives))} ${capitalize(_pickRandomly(english.nouns))}';
 
 String padWithZeros(int x) => x.toString().padLeft(2, '0');
-
