@@ -1,59 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart' hide Page;
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:wakup/core/ringtone.dart';
+import 'package:wakup/core/notification.dart';
 import 'package:wakup/pages/running_page.dart';
-import 'package:wakup/themes.dart';
 import 'package:wakup/widgets/timepicker.dart';
-
-const int _FLAG_INSISTENT = 0x00000004;
-const int _FLAG_NO_CLEAR = 0x00000020;
-const int _FLAG_ONGOING_EVENT = 0x00000002;
-
-void _scheduleNotification(DateTime dateTime, bool useRingtone) async {
-  final zonedDateTime = tz.TZDateTime.from(dateTime, tz.local);
-  final sound =
-      useRingtone ? await getDefaultRingtone() : await getDefaultAlarmAlert();
-  final channelId =
-      !useRingtone || sound == null ? 'default_channel' : 'ringtone_channel';
-  final channelName =
-      !useRingtone || sound == null ? 'Alarms' : 'Alarms with ringtone sounds';
-
-  await FlutterLocalNotificationsPlugin().zonedSchedule(
-    0,
-    'Wake up!',
-    'Enough sleep',
-    zonedDateTime,
-    NotificationDetails(
-      android: AndroidNotificationDetails(
-        channelId,
-        channelName,
-        'Alarm notifications',
-        fullScreenIntent: true,
-        visibility: NotificationVisibility.public,
-        ongoing: true,
-        sound: sound,
-        autoCancel: false,
-        category: 'alarm',
-        channelShowBadge: true,
-        priority: Priority.max,
-        importance: Importance.max,
-        color: primaryColor,
-        additionalFlags: Int32List.fromList([
-          _FLAG_INSISTENT,
-          _FLAG_NO_CLEAR,
-          _FLAG_ONGOING_EVENT,
-        ]),
-      ),
-    ),
-    uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
-    androidAllowWhileIdle: true,
-  );
-}
 
 class WaitingPage extends StatefulWidget {
   const WaitingPage({Key? key}) : super(key: key);
@@ -63,6 +12,7 @@ class WaitingPage extends StatefulWidget {
 }
 
 class _WaitingPageState extends State<WaitingPage> {
+  final _initialTimeOfDay = TimeOfDay.now();
   TimeOfDay _timeOfDay = TimeOfDay.now();
   bool _useRingtone = true;
 
@@ -97,7 +47,7 @@ class _WaitingPageState extends State<WaitingPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('alarm_time', alarmTime.millisecondsSinceEpoch);
 
-    _scheduleNotification(alarmTime, _useRingtone);
+    scheduleNotification(alarmTime, _useRingtone);
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => RunningPage(finishTime: alarmTime),
@@ -130,7 +80,7 @@ class _WaitingPageState extends State<WaitingPage> {
       body: ListView(
         children: [
           TimePicker(
-            initialTime: _timeOfDay,
+            initialTime: _initialTimeOfDay,
             onChange: (td) {
               setState(() {
                 _timeOfDay = td;
@@ -142,10 +92,8 @@ class _WaitingPageState extends State<WaitingPage> {
             padding: EdgeInsets.all(16),
             child: Text(
               'Settings',
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  ?.copyWith(color: Colors.white70),
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  color: Colors.white70, fontWeight: FontWeight.w500),
             ),
           ),
           SwitchListTile(
