@@ -52,8 +52,6 @@ void main() async {
       android: AndroidInitializationSettings('@mipmap/ic_launcher'),
     ),
     onSelectNotification: (payload) async {
-      print('payload: $payload (${payload?.length})');
-      print('he2');
       selectNotificationSubject.add(payload);
     },
   );

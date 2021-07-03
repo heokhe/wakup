@@ -2,13 +2,37 @@ import 'package:duration/duration.dart';
 import 'package:flutter/material.dart' hide Page;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wakup/main.dart';
+import 'package:wakup/pages/testing_page.dart';
 import 'package:wakup/pages/waiting_page.dart';
 import 'package:wakup/widgets/countdown.dart';
 import 'package:wakup/widgets/page.dart';
 
-class RunningPage extends StatelessWidget {
+class RunningPage extends StatefulWidget {
   final DateTime finishTime;
   RunningPage({required this.finishTime});
+
+  @override
+  _RunningPageState createState() => _RunningPageState();
+}
+
+class _RunningPageState extends State<RunningPage> {
+  @override
+  void initState() {
+    super.initState();
+    selectNotificationSubject.listen((_) {
+      FlutterLocalNotificationsPlugin().cancelAll();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => TestPage()),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    selectNotificationSubject.close();
+  }
 
   void _cancel(BuildContext context) async {
     FlutterLocalNotificationsPlugin().cancelAll();
@@ -22,8 +46,9 @@ class RunningPage extends StatelessWidget {
         builder: (context) => WaitingPage(),
       ),
     );
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Alarm cancelled')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Alarm cancelled')),
+    );
   }
 
   @override
@@ -31,7 +56,7 @@ class RunningPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Countdown(
-          finishTime: finishTime,
+          finishTime: widget.finishTime,
           builder: (Duration duration) {
             final durationAsString = prettyDuration(
               duration.isNegative ? Duration.zero : duration,
