@@ -129,13 +129,19 @@ class _TimePickerState extends State<TimePicker> {
               Flexible(
                 flex: 2,
                 child: Center(
-                  child: Text(
-                    ':',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline4
-                        ?.copyWith(color: Colors.white38),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      bottom: 0.14 * // hardcoded
+                          Theme.of(context).textTheme.headline4!.fontSize!,
+                    ),
+                    child: Text(
+                      ':',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4
+                          ?.copyWith(color: Colors.white38),
+                    ),
                   ),
                 ),
               ),
