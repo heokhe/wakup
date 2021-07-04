@@ -79,15 +79,22 @@ class _WaitingPageState extends State<WaitingPage> {
       ),
       body: ListView(
         children: [
-          TimePicker(
-            initialTime: _initialTimeOfDay,
-            onChange: (td) {
-              setState(() {
-                _timeOfDay = td;
-              });
-            },
+          Card(
+            color: Theme.of(context).appBarTheme.color?.withOpacity(0.6),
+            margin: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              child: TimePicker(
+                initialTime: _initialTimeOfDay,
+                onChange: (td) {
+                  setState(() {
+                    _timeOfDay = td;
+                  });
+                },
+              ),
+            ),
           ),
-          Divider(height: 1),
           Padding(
             padding: EdgeInsets.all(16),
             child: Text(
