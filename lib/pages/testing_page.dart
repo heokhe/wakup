@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:wakup/pages/waiting_page.dart';
 import 'package:wakup/themes.dart';
-import 'package:wakup/utils.dart';
+import 'package:wakup/core/utils.dart';
 
 class TestPage extends StatelessWidget {
   @override

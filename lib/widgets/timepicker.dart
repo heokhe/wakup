@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:wakup/themes.dart';
-import 'package:wakup/utils.dart';
+import 'package:wakup/core/utils.dart';
 
 class _CustomScrollablePicker extends StatelessWidget {
   final List<Widget> children;
