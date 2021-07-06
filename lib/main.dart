@@ -9,7 +9,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:wakup/pages/testing_page.dart';
 import 'package:rxdart/subjects.dart';
-import 'pages/waiting_page.dart';
+import 'pages/homepage.dart';
 import 'pages/running_page.dart';
 import 'themes.dart';
 
@@ -75,10 +75,10 @@ class _App extends StatelessWidget {
       theme: baseTheme,
       initialRoute: initialRoute,
       routes: {
-        '/': (context) => WaitingPage(),
+        '/': (context) => HomePage(),
         '/running': (context) =>
             RunningPage(finishTime: alarmTime ?? DateTime.now()),
-        '/testing': (context) => TestPage()
+        '/testing': (context) => TestingPage()
       },
     );
   }

@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:wakup/pages/waiting_page.dart';
+import 'package:wakup/pages/homepage.dart';
 import 'package:wakup/themes.dart';
 import 'package:wakup/core/utils.dart';
 
-class TestPage extends StatelessWidget {
+class TestingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(data: testingTheme, child: _TestPage());
@@ -42,7 +42,7 @@ class _TestPageState extends State<_TestPage> {
       prefs.remove('alarm_time');
     });
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => WaitingPage()),
+      MaterialPageRoute(builder: (context) => HomePage()),
     );
   }
 

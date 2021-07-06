@@ -4,7 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakup/main.dart';
 import 'package:wakup/pages/testing_page.dart';
-import 'package:wakup/pages/waiting_page.dart';
+import 'package:wakup/pages/homepage.dart';
 import 'package:wakup/widgets/countdown.dart';
 import 'package:wakup/widgets/page.dart';
 
@@ -23,7 +23,7 @@ class _RunningPageState extends State<RunningPage> {
     selectNotificationSubject.listen((_) {
       FlutterLocalNotificationsPlugin().cancelAll();
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => TestPage()),
+        MaterialPageRoute(builder: (context) => TestingPage()),
       );
     });
   }
@@ -43,7 +43,7 @@ class _RunningPageState extends State<RunningPage> {
     ScaffoldMessenger.of(context).clearSnackBars();
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => WaitingPage(),
+        builder: (context) => HomePage(),
       ),
     );
     ScaffoldMessenger.of(context).showSnackBar(

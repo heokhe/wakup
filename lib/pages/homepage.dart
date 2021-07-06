@@ -4,14 +4,14 @@ import 'package:wakup/core/notification.dart';
 import 'package:wakup/pages/running_page.dart';
 import 'package:wakup/widgets/timepicker.dart';
 
-class WaitingPage extends StatefulWidget {
-  const WaitingPage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  _WaitingPageState createState() => _WaitingPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _WaitingPageState extends State<WaitingPage> {
+class _HomePageState extends State<HomePage> {
   final _initialTimeOfDay = TimeOfDay.now();
   TimeOfDay _timeOfDay = TimeOfDay.now();
   bool _useRingtone = true;
