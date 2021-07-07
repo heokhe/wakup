@@ -4,8 +4,13 @@ import 'package:flutter/widgets.dart';
 
 class Countdown extends StatefulWidget {
   final DateTime finishTime;
-  final Widget Function(Duration duration) builder;
-  const Countdown({Key? key, required this.finishTime, required this.builder})
+  final Widget Function(String formattedDuration, Duration duration) builder;
+  final String Function(Duration) format;
+  const Countdown(
+      {Key? key,
+      required this.finishTime,
+      required this.format,
+      required this.builder})
       : super(key: key);
 
   @override
@@ -31,6 +36,7 @@ class _CountdownState extends State<Countdown> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(widget.finishTime.difference(DateTime.now()));
+    Duration duration = widget.finishTime.difference(DateTime.now());
+    return widget.builder(widget.format(duration), duration);
   }
 }
