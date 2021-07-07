@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide Page;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakup/core/notification.dart';
+import 'package:wakup/core/utils.dart';
 import 'package:wakup/pages/running_page.dart';
 import 'package:wakup/widgets/timepicker.dart';
 
@@ -31,18 +32,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _setTheAlarm(BuildContext context) async {
-    final now = DateTime.now();
-    var alarmTime = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      _timeOfDay.hour,
-      _timeOfDay.minute,
-      0,
-    );
-    if (alarmTime.isBefore(now) || alarmTime.isAtSameMomentAs(now)) {
-      alarmTime = alarmTime.add(Duration(days: 1));
-    }
+    final alarmTime = findNextOccurrenceOfTimeOfDay(_timeOfDay);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('alarm_time', alarmTime.millisecondsSinceEpoch);
