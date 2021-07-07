@@ -21,14 +21,7 @@ enum AlarmState { running, waiting, testing }
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      systemNavigationBarColor: baseTheme.scaffoldBackgroundColor,
-      systemNavigationBarDividerColor: baseTheme.scaffoldBackgroundColor,
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
-  );
+  SystemChrome.setSystemUIOverlayStyle(defaultSystemUiOverlayStyle);
 
   tzdata.initializeTimeZones();
   final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();

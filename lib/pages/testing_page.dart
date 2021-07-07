@@ -27,21 +27,13 @@ class _TestPageState extends State<_TestPage> {
   void initState() {
     super.initState();
     Wakelock.enable();
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor: testingTheme.scaffoldBackgroundColor,
-      ),
-    );
+    SystemChrome.setSystemUIOverlayStyle(testingPageSystemUiOverlayStyle);
   }
 
   @override
   void dispose() {
     Wakelock.disable();
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor: baseTheme.scaffoldBackgroundColor,
-      ),
-    );
+    SystemChrome.setSystemUIOverlayStyle(defaultSystemUiOverlayStyle);
     super.dispose();
   }
 

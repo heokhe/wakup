@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 final _scaffoldBackground = Colors.grey.shade900;
@@ -50,4 +51,15 @@ final testingTheme = baseTheme.copyWith(
     primary: _accentColor,
     secondary: _accentColor,
   ),
+);
+
+final defaultSystemUiOverlayStyle = SystemUiOverlayStyle(
+  statusBarColor: Colors.transparent,
+  systemNavigationBarColor: baseTheme.scaffoldBackgroundColor,
+  systemNavigationBarDividerColor: baseTheme.scaffoldBackgroundColor,
+  systemNavigationBarIconBrightness: Brightness.light,
+);
+final testingPageSystemUiOverlayStyle = defaultSystemUiOverlayStyle.copyWith(
+  systemNavigationBarColor: testingTheme.scaffoldBackgroundColor,
+  systemNavigationBarDividerColor: testingTheme.scaffoldBackgroundColor,
 );
