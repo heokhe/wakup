@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:wakup/themes.dart';
 import 'package:wakup/core/utils.dart';
 
 class _CustomScrollablePicker extends StatelessWidget {
@@ -118,7 +117,7 @@ class _TimePickerState extends State<TimePicker> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(64),
               border: Border.all(
-                color: primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 width: 1.5,
               ),
             ),
