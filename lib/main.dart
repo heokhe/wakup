@@ -49,7 +49,7 @@ void main() async {
 
   await FlutterLocalNotificationsPlugin().initialize(
     InitializationSettings(
-      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+      android: AndroidInitializationSettings('@drawable/ic_stat_name'),
     ),
     onSelectNotification: (payload) async {
       selectNotificationSubject.add(payload);
