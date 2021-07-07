@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:wakup/core/ringtone.dart';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:wakup/themes.dart';
+import 'package:wakup/themes.dart' show notificationColor;
 
 const int _FLAG_INSISTENT = 0x00000004;
 const int _FLAG_NO_CLEAR = 0x00000020;
@@ -37,7 +37,7 @@ void scheduleNotification(DateTime dateTime, bool useRingtone) async {
         channelShowBadge: true,
         priority: Priority.max,
         importance: Importance.max,
-        color: primaryColor,
+        color: notificationColor,
         additionalFlags: Int32List.fromList([
           _FLAG_INSISTENT,
           _FLAG_NO_CLEAR,
